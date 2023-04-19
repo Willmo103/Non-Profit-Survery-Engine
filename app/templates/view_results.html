@@ -7,7 +7,10 @@ content %}
     <strong>{{ question.text }}</strong>
     <ul>
       {% for response in question.responses %}
-      <li>{{ response.user.username }}: {{ response.response_text }}</li>
+      <li>
+        {% if response.user %} {{ response.user.username }}: {% endif %}
+        {{ response.response_text }}
+      </li>
       {% endfor %}
     </ul>
   </li>

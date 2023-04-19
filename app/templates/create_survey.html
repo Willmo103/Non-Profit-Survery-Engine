@@ -4,8 +4,8 @@ content %}
 <form action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <div class="form-group">
-    {{ form.title.label }} {{ form.title(class="form-control") }} {{form.anon}}
-    {{form.anon.label}}
+    {{ form.title.label }} {{ form.title(class="form-control") }} {{form.is_anonymous}}
+    {{form.is_anonymous.label}}
   </div>
   <button type="submit" class="btn btn-primary">Create Survey</button>
 </form>

@@ -3,28 +3,15 @@
 <h1>Available Surveys</h1>
 <ul class="list-group">
   {% for survey in surveys %}
-    {% if survey.is_anonymous and not current_user.is_authenticated %}
-    <li><a href="{{ url_for('routes.take_survey', survey_id=survey.id) }}">{{ survey.title }}</a></li>
+  {% if survey.is_anonymous and not current_user.is_authenticated %}
+  <li><a href="{{ url_for('routes.take_survey', survey_id=survey.id) }}">{{ survey.title }}</a></li>
   {% endif %}
   <li class="list-group-item">
-    <a href="{{ url_for('routes.take_survey', survey_id=survey.id) }}"
-      >{{ survey.title }}</a
-    >
+    <a href="{{ url_for('routes.take_survey', survey_id=survey.id) }}">{{ survey.title }}</a>
     {% if current_user.is_admin %}
-    <a
-      href="{{ url_for('routes.view_results', survey_id=survey.id) }}"
-      class="float-right"
-      >View Results</a
-    >
-    <a
-      href="{{ url_for('routes.survey', survey_id=survey.id) }}"
-      class="float-right mr-3"
-      >Edit Survey</a
-    <a
-      href="{{ url_for('routes.export_csv', survey_id=survey.id) }}"
-      class="float-right mr-3"
-      >Export CSV</a
-    >
+    <a href="{{ url_for('routes.view_results', survey_id=survey.id) }}" class="float-right">View Results</a>
+    <a href="{{ url_for('routes.survey', survey_id=survey.id) }}" class="float-right mr-3">Edit Survey</a>
+    <a href="{{ url_for('routes.export_csv', survey_id=survey.id) }}" class="float-right mr-3">Export CSV</a>
     {% endif %}
   </li>
   {% endfor %}
