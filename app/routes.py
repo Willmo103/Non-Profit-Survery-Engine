@@ -8,15 +8,15 @@ from werkzeug.urls import url_parse
 import csv
 from io import StringIO
 
-routes = Blueprint('routes', __name__)
+bp = Blueprint('routes', __name__)
 
-@routes.route('/')
-@routes.route('/index')
+@bp.route('/')
+@bp.route('/index')
 def index():
     surveys = Survey.query.order_by(Survey.timestamp.desc()).all()
     return render_template('index.html', title='Home', surveys=surveys)
 
-@routes.route('/login', methods=['GET', 'POST'])
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -33,13 +33,13 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@routes.route('/logout')
+@bp.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for
     ('index'))
 
-@routes.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -53,7 +53,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@routes.route('/create_survey', methods=['GET', 'POST'])
+@bp.route('/create_survey', methods=['GET', 'POST'])
 @login_required
 def create_survey():
     form = CreateSurveyForm()
@@ -65,7 +65,7 @@ def create_survey():
         return redirect(url_for('index'))
     return render_template('create_survey.html', title='Create Survey', form=form)
 
-@routes.route('/survey/<int:survey_id>', methods=['GET', 'POST'])
+@bp.route('/survey/<int:survey_id>', methods=['GET', 'POST'])
 @login_required
 def survey(survey_id):
     survey = Survey.query.get_or_404(survey_id)
@@ -79,7 +79,7 @@ def survey(survey_id):
     questions = survey.questions.all()
     return render_template('survey.html', title=survey.title, survey=survey, form=form, questions=questions)
 
-@routes.route('/take_survey/<int:survey_id>', methods=['GET', 'POST'])
+@bp.route('/take_survey/<int:survey_id>', methods=['GET', 'POST'])
 @login_required
 def take_survey(survey_id):
     survey = Survey.query.get_or_404(survey_id)
@@ -95,7 +95,7 @@ def take_survey(survey_id):
         return redirect(url_for('index'))
     return render_template('take_survey.html', title=survey.title, survey=survey, questions=questions, form=form)
 
-@routes.route('/view_results/<int:survey_id>')
+@bp.route('/view_results/<int:survey_id>')
 @login_required
 def view_results(survey_id):
     survey = Survey.query.get_or_404(survey_id)
@@ -105,7 +105,7 @@ def view_results(survey_id):
     questions = survey.questions.all()
     return render_template('view_results.html', title=survey.title, survey=survey, questions=questions)
 
-@routes.route('/export_csv/<int:survey_id>')
+@bp.route('/export_csv/<int:survey_id>')
 @login_required
 def export_csv(survey_id):
     survey = Survey.query.get_or_404(survey_id)

@@ -17,4 +17,8 @@ def create_app(config_class=Config):
     from app import routes
     app.register_blueprint(routes.bp)
 
+    # Create tables if they don't exist
+    with app.app_context():
+        db.create_all()
+
     return app
