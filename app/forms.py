@@ -35,7 +35,3 @@ class SurveyResponseForm(FlaskForm):
     response = TextAreaField('Response', validators=[DataRequired(), Length(min=1, max=200)])
     submit = SubmitField('Submit Response')
 
-class AddQuestionsForm(FlaskForm):
-    question_text = StringField('Question', validators=[DataRequired()])
-    add_another = BooleanField('Add another question')
-    submit = SubmitField('Submit')

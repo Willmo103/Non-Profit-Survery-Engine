@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, make_respo
 from flask_login import current_user, login_user, logout_user, login_required
 from app import db
 from app.models import User, Survey, Question, Response
-from app.forms import LoginForm, RegistrationForm, CreateSurveyForm, AddQuestionForm, SurveyResponseForm, AddQuestionsForm
+from app.forms import LoginForm, RegistrationForm, CreateSurveyForm, AddQuestionForm, SurveyResponseForm
 from app import routes
 from werkzeug.urls import url_parse
 import csv
@@ -13,8 +13,10 @@ bp = Blueprint('routes', __name__)
 @bp.route('/')
 @bp.route('/index')
 def index():
+    is_admin = False
     surveys = Survey.query.order_by(Survey.timestamp.desc()).all()
-    is_admin = current_user.is_admin  # Check if the current user is an admin
+    if current_user.is_authenticated:
+        is_admin = current_user.is_admin  # Check if the current user is an admin
     return render_template('index.html', title='Home', surveys=surveys, is_admin=is_admin)
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -30,7 +32,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('routes.index')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -135,13 +137,13 @@ def export_csv(survey_id):
 @login_required
 def add_questions(survey_id):
     survey = Survey.query.get_or_404(survey_id)
-    form = AddQuestionsForm()
+    form = AddQuestionForm()
     if form.validate_on_submit():
         question = Question(question_text=form.question_text.data, survey_id=survey.id)
         db.session.add(question)
         db.session.commit()
         if form.add_another.data:
-            return redirect(url_for('add_questions', survey_id=survey.id))
+            return redirect(url_for('routes.add_questions', survey_id=survey.id))
         else:
             return redirect(url_for('index'))
-    return render_template('add_questions.html', title='Add Questions', form=form, survey=survey)
+    return render_template('routes.add_questions.html', title='Add Questions', form=form, survey=survey)
