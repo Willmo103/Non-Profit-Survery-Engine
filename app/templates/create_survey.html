@@ -4,8 +4,9 @@ content %}
 <form action="" method="post" novalidate>
   {{ form.hidden_tag() }}
   <div class="form-group">
-    {{ form.title.label }} {{ form.title(class="form-control") }}
+    {{ form.title.label }} {{ form.title(class="form-control") }} {{form.anon}}
+    {{form.anon.label}}
   </div>
   <button type="submit" class="btn btn-primary">Create Survey</button>
 </form>
-{% endblock %} s
+{% endblock %}

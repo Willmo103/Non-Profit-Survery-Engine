@@ -5,7 +5,7 @@ from config import Config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'routes.login'
 
 def create_app(config_class=Config):
     app = Flask(__name__)

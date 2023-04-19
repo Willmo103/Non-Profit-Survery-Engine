@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
 class CreateSurveyForm(FlaskForm):
     title = StringField('Survey Title', validators=[DataRequired()])
     submit = SubmitField('Create Survey')
-    anon = BooleanField('Anonymous')
+    is_anonymous = BooleanField('Anonymous Survey')
 
 class AddQuestionForm(FlaskForm):
     question_text = StringField('Question', validators=[DataRequired(), Length(min=1, max=200)])

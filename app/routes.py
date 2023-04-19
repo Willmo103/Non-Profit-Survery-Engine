@@ -90,14 +90,18 @@ def take_survey(survey_id):
     survey = Survey.query.get_or_404(survey_id)
     questions = survey.questions.all()
     form = SurveyResponseForm()
-    if request.method == 'POST':
-        for question in questions:
-            response_text = request.form.get(f'question_{question.id}')
-            response = Response(user_id=current_user.id, question_id=question.id, response_text=response_text)
-            db.session.add(response)
-            db.session.commit()
-        flash('Your survey responses have been recorded.')
-        return redirect(url_for('routes.index'))
+    if current_user.is_authenticated or survey.is_anonymous:
+        if request.method == 'POST':
+            for question in questions:
+                response_text = request.form.get(f'question_{question.id}')
+                response = Response(user_id=current_user.id, question_id=question.id, response_text=response_text)
+                db.session.add(response)
+                db.session.commit()
+            flash('Your survey responses have been recorded.')
+            return redirect(url_for('routes.index'))
+    else:
+        flash('You must be logged in to take this survey.')
+        return redirect(url_for('routes.login'))
     return render_template('take_survey.html', title=survey.title, survey=survey, questions=questions, form=form)
 
 @bp.route('/view_results/<int:survey_id>')
@@ -145,5 +149,5 @@ def add_questions(survey_id):
         if form.add_another.data:
             return redirect(url_for('routes.add_questions', survey_id=survey.id))
         else:
-            return redirect(url_for('index'))
+            return redirect(url_for('routes.index'))
     return render_template('routes.add_questions.html', title='Add Questions', form=form, survey=survey)
