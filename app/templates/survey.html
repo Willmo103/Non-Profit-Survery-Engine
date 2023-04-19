@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}{{ survey.title }}{% endblock %} {%
+block content %}
+<h1>{{ survey.title }}</h1>
+<h2>Questions</h2>
+<ul class="list-group">
+  {% for question in questions %}
+  <li class="list-group-item">{{ question.text }}</li>
+  {% endfor %}
+</ul>
+<h2>Add Question</h2>
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+    {{ form.question_text.label }} {{ form.question_text(class="form-control")
+    }}
+  </div>
+  <div class="form-group">
+    {{ form.input_type.label }} {{ form.input_type(class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ form.input_length.label }} {{ form.input_length(class="form-control") }}
+  </div>
+  <button type="submit" class="btn btn-primary">Add Question</button>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1>Available Surveys</h1>
+<ul class="list-group">
+  {% for survey in surveys %}
+  <li class="list-group-item">
+    <a href="{{ url_for('routes.take_survey', survey_id=survey.id) }}"
+      >{{ survey.title }}</a
+    >
+    {% if current_user.is_admin %}
+    <a
+      href="{{ url_for('routes.view_results', survey_id=survey.id) }}"
+      class="float-right"
+      >View Results</a
+    >
+    <a
+      href="{{ url_for('routes.export_csv', survey_id=survey.id) }}"
+      class="float-right mr-3"
+      >Export CSV</a
+    >
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

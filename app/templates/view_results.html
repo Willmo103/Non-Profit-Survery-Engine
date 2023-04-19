@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}View Results{% endblock %} {% block
+content %}
+<h1>{{ survey.title }} - Results</h1>
+<ul class="list-group">
+  {% for question in questions %}
+  <li class="list-group-item">
+    <strong>{{ question.text }}</strong>
+    <ul>
+      {% for response in question.responses %}
+      <li>{{ response.user.username }}: {{ response.response_text }}</li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

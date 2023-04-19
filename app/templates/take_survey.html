@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}Take Survey{% endblock %} {% block
+content %}
+<h1>{{ survey.title }}</h1>
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }} {% for question in questions %}
+  <div class="form-group">
+    <label>{{ question.text }}</label>
+    <input
+      type="{{ question.input_type }}"
+      name="question_{{ question.id }}"
+      class="form-control"
+      maxlength="{{ question.input_length }}"
+      required
+    />
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit Survey</button>
+</form>
+{% endblock %}
