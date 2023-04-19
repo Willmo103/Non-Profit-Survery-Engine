@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+<h1>Add Questions to {{ survey.title }}</h1>
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <p>{{ form.question_text.label }}<br /></p>
+</form>
+      {{ form.question_text(size=32) }}
+    </p>
+    <p>
+      {{ form.add_another.label }} {{ form.add_another() }}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}

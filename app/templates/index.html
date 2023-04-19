@@ -14,6 +14,10 @@
       >View Results</a
     >
     <a
+      href="{{ url_for('routes.edit_survey', survey_id=survey.id) }}"
+      class="float-right mr-3"
+      >Edit Survey</a
+    <a
       href="{{ url_for('routes.export_csv', survey_id=survey.id) }}"
       class="float-right mr-3"
       >Export CSV</a

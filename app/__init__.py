@@ -5,7 +5,7 @@ from config import Config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'routes.login'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -14,11 +14,13 @@ def create_app(config_class=Config):
     db.init_app(app)
     login_manager.init_app(app)
 
-    from app import routes
-    app.register_blueprint(routes.bp)
 
     # Create tables if they don't exist
     with app.app_context():
         db.create_all()
+
+        from . import routes
+
+        app.register_blueprint(routes.bp)
 
     return app
