@@ -197,3 +197,10 @@ def add_questions(survey_id):
     return render_template(
         "add_questions.html", title="Add Questions", form=form, survey=survey
     )
+
+# TODO: add an option to remove questions from a survey when editing
+# TODO: add an option to edit questions when editing a survey
+# TODO: add an option to delete surveys
+# TODO: add add simple data visualization to view_results
+# TODO: create an abstract class to hold various demographic questions inherited by a survey class to be asked at the beginning of a survey
+# TODO: create a form to choose the fields to be included in the demographic questions
