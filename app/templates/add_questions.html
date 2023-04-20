@@ -2,13 +2,17 @@
 <h1>Add Questions to {{ survey.title }}</h1>
 <form action="" method="post" novalidate>
   {{ form.hidden_tag() }}
-  <p>{{ form.question_text.label }}<br /></p>
+  <div class="form-group">
+    {{ form.question_text.label }} {{ form.question_text(class="form-control")
+    }}
+  </div>
+  <div class="form-group">
+    {{ form.input_type.label }} {{ form.input_type(class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ form.input_length.label }} {{ form.input_length(class="form-control") }}
+  </div>
+  {{ form.add_another.label }} {{ form.add_another() }}
+  <button type="submit" class="btn btn-primary">Add Question</button>
 </form>
-      {{ form.question_text(size=32) }}
-    </p>
-    <p>
-      {{ form.add_another.label }} {{ form.add_another() }}
-    </p>
-    <p>{{ form.submit() }}</p>
-  </form>
 {% endblock %}

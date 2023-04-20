@@ -1,0 +1,24 @@
+version: '8.3'
+
+services:
+  survey_engine:
+    container_name: survey_engine_dev
+    image: mh_survey_engine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/src
+      - ./survey.db:/src/survey.db
+    environment:
+      - FLASK_APP=app
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    command: flask run --host=0.0.0.0 --port=5000
+    tty: true
+    stdin_open: true
+
+volumes:
+  survey.db:

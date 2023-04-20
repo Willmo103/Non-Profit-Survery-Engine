@@ -22,6 +22,7 @@ def create_app(config_class=Config):
     # Create tables if they don't exist
     with app.app_context():
         from . import models
+
         db.create_all()
 
     return app

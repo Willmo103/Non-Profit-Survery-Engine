@@ -9,3 +9,7 @@ class Config:
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "survey.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+
+# TODO create a unified store of environment variables, either in dockerfile or in config.py,
+# but remove the redundancy of having them in both places

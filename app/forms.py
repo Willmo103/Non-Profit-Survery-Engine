@@ -61,7 +61,20 @@ class AddQuestionForm(FlaskForm):
         "Input Type", choices=[("text", "Text"), ("number", "Number")]
     )
     input_length = IntegerField("Input Length", default=100)
+    add_another = BooleanField("Add Another Question", default=False)
     submit = SubmitField("Add Question")
+
+    def validate_input_length(self, input_length):
+        if input_length.data < 1:
+            raise ValidationError("Input length must be greater than 0.")
+
+    def validate_input_type(self, input_type):
+        if input_type.data not in ["text", "number"]:
+            raise ValidationError("Input type must be either text or number.")
+
+    def validate_question_text(self, question_text):
+        if len(question_text.data) > 200:
+            raise ValidationError("Question text must be less than 200 characters.")
 
 
 class SurveyResponseForm(FlaskForm):

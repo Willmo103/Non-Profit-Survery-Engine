@@ -187,7 +187,7 @@ def add_questions(survey_id):
     survey = Survey.query.get_or_404(survey_id)
     form = AddQuestionForm()
     if form.validate_on_submit():
-        question = Question(question_text=form.question_text.data, survey_id=survey.id)
+        question = Question(text=form.question_text.data, survey_id=survey.id)
         db.session.add(question)
         db.session.commit()
         if form.add_another.data:
@@ -195,5 +195,5 @@ def add_questions(survey_id):
         else:
             return redirect(url_for("routes.index"))
     return render_template(
-        "routes.add_questions.html", title="Add Questions", form=form, survey=survey
+        "add_questions.html", title="Add Questions", form=form, survey=survey
     )
